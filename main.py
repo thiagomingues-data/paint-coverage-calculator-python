@@ -40,17 +40,30 @@ print("Valor: R$", valor_galoes)
 # -----------------------------
 # 3. Optimized mix (10% safety margin)
 # -----------------------------
-litros_com_folga = litros_tinta * 1.10
+litros_tinta_margem =litros_tinta* 1.10
+print(f'{litros_tinta_margem:.2f} litros, adicionando uma margem de 10%')
+print()
 
-qtd_latas_mix = int(litros_com_folga // lata)
-resto = litros_com_folga % lata
+# quantidade inicial de latas
+latas = litros_tinta_margem // 18
 
-qtd_galoes_mix = int(resto // galao)
-if resto % galao != 0:
-    qtd_galoes_mix += 1
+# litros que ainda faltam
+restante = litros_tinta_margem % 18
 
-valor_total_mix = (qtd_latas_mix * p_lata) + (qtd_galoes_mix * p_galao)
+# quantidade de galões
+galoes = restante // 3.6
 
-print("\nMistura otimizada (10% folga):")
-print(qtd_latas_mix, "lata(s) e", qtd_galoes_mix, "galão(ões)")
-print("Valor total: R$", valor_total_mix)
+if restante % 3.6 != 0:
+    galoes += 1
+
+# compara os preços
+if galoes * 25 < 80:
+    preco = latas * 80 + galoes * 25
+else:
+    latas += 1
+    galoes = 0
+    preco = latas * 80
+
+print(f'Latas : {latas:.0f}')
+print(f'Galões: {galoes:.0f}')
+print(f'Preço : R$ {preco:.2f}')
